@@ -11,7 +11,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     padding: 20px;
-    border-bottom: 2px solid var(--white-color);
+    border-bottom: 3px groove #fd585f;
 }
 
 .nav-logo{
@@ -34,11 +34,27 @@ body {
     margin: 12px;
     color: var(--white-color);
     font-family: 'Poppins', sans-serif;
+    display: inline;
+    position: relative;
 }
-
-.nav-link:hover{
-    color: var(--secondary-color);
-}
+  
+.nav-link:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--white-color);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+.nav-link:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 
 .toggle-button{
     font-size: 21px;
@@ -71,6 +87,7 @@ body {
     .collapse{
         max-height: 0;
         overflow: hidden;
+        transition: all 0.8s ease-in-out;
     }
 
     .collapse .nav-link{
