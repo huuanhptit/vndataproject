@@ -39,4 +39,46 @@ body {
 .nav-link:hover{
     color: var(--secondary-color);
 }
+
+.toggle-button{
+    font-size: 21px;
+    background-color: transparent;
+    color: var(--white-color);
+    border: none;
+    position: absolute;
+    right: 0;
+    margin: 8px 10px;
+    display: none;
+}
+
+.toggle-button:focus{
+    outline: none;
+}
 /* .navigation menu */
+
+/* Media Query */
+@media(max-width: 992px){
+    .navbar{
+        flex-direction: column;
+    }
+}
+@media(max-width: 580px){
+    
+    .toggle-button{
+        display: initial;
+    }
+
+    .collapse{
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .collapse .nav-link{
+        display: block;
+        text-align: center;
+    }
+    
+    .collapse-toggle{
+        max-height: 500px;
+    }
+}
