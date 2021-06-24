@@ -76,8 +76,7 @@ body {
 
 #footer{
     padding: 0px 0 30px;
-    border-bottom-left-radius: 7px;
-    border-bottom-right-radius: 7px;
+    border-radius: 0 0 7px 7px;
 }
 
 .mb-3{
@@ -137,42 +136,56 @@ body {
 
 .container__header {
     margin-top: 50px;
-    height: 10.6rem;
+    height: 6.625rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 1rem 1rem 0 0;
+    border-radius: 0.4375rem 0.4375rem 0 0;
     background-color: var(--secondary-color);
 }
 
 .container__input {
-    height: 4.5rem;
-    padding: 0 6rem;
-    border-radius: 4rem;
-    background-color: var(--secondary-color);
+    float: left;
+    width: 33.3333%;
+    box-sizing: border-box;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .search-form {
-   height: 4rem;
-   display: flex;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    max-width: none!important;
 }
 
 .input-link {
-    font-size: 1.6rem;
-    width: 20rem;
+    font-size: 15px;
     border: 0;
-    padding: 0;
+    appearance: none;
+    box-sizing: border-box;
+    border-radius: 25px;
+    outline: 0;
+    letter-spacing: 0.3px;
+    padding: 12px 30px;
+    height: 45px;
+    width: 100%;
     outline: none;
+    display: block;
     color: var(--white-color);
-    background-color: var(--secondary-color);
+    background: rgba(0,0,0,0.15);
 }
 
 .submit {
-    background-color: var(--secondary-color);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    background: none;
+    border: 0;
+    backface-visibility: hidden;
+    margin-top: -8.5px;
     color: var(--white-color);
-    border: none;
-    font-size: 1.6rem;
-    font-weight: 400;
+    padding: 0;
 }
 
 .submit:hover {
