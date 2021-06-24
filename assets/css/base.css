@@ -25,10 +25,19 @@ a{
 }
 
 html{
-    font-size: 62.5%;
+    font-size: 100%;
     line-height: 1.7rem;
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
+}
+
+.bg--dark{
+    background: rgba(0,0,0,0.12);
+}
+
+.bg--blue{
+    background: var(--secondary-color);
+    color: #fff;
 }
 
 .text-light{
@@ -36,7 +45,7 @@ html{
 }
 
 .text-secondary{
-    color: var(--secondary);
+    color: var(--secondary-color);
 }
 
 .text-dark{
@@ -45,6 +54,21 @@ html{
 
 .text-primary{
     color: var(--primary-color);
+}
+
+.text-center{
+    text-align: center;
+}
+
+.btn{
+    padding: 15px 20px;
+    border: none;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.btn:hover{
+    opacity: 1
 }
 
 .container{
