@@ -66,3 +66,11 @@ html{
     display: flex;
     flex-wrap: wrap;
 }
+
+::-webkit-input-placeholder {
+    color: var(--white-color);
+}
+
+:focus::-webkit-input-placeholder {
+    opacity: 0.5;
+}
