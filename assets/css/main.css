@@ -492,10 +492,6 @@ body {
     border-bottom: 1px solid #e6e6e6;
 }
 
-.sidebar__list {
-
-}
-
 .sidebar__list-items {
     font-size: 18px;
     color: var(--black-color);
