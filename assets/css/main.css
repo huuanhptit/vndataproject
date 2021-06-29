@@ -561,8 +561,34 @@ body {
         display: block;
         text-align: center;
     }
+
+    .nav-items {
+        padding: 0 20px;
+    }
+
+    .nav-icon {
+        display: flex;
+        padding: 0 20px;
+    }
     
     .collapse-toggle{
         max-height: 500px;
+    }
+
+    .select__current {
+        display: none;
+    }
+
+    .container__input {
+        width: 100%;
+    }
+
+    .container__content {
+        height: 100%;
+        flex-direction: column;
+    }
+
+    .content__div {
+        flex-direction: column;
     }
 }
