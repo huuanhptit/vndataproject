@@ -63,7 +63,7 @@ body {
     border: none;
     position: absolute;
     right: 0;
-    margin: 8px 10px;
+    margin: 0px 16px;
     display: none;
 }
 
@@ -499,7 +499,7 @@ body {
 }
 
 /* sidebar three */
-.sibebar__three {
+.sidebar__three {
     height: 152px;
     padding: 20px 0 25px 0;
     border-bottom: 1px solid #e6e6e6;
@@ -534,32 +534,69 @@ body {
 
 /* Media Query */
 
-@media(max-width: 1024px){
+@media(min-width: 1024px){
+    
+}
+
+@media(min-width:581px) and (max-width: 1023px) {
+    .container__input {
+        width: 40%;
+    }
+
+    .select__current {
+        width: 20rem;
+    }
+
+    .container__content {
+        flex-direction: column;
+    }
+
+    .nav-icon,
+    .nav-items {
+        padding: 0 20px;
+    }
+
     .footer__row{
         flex-wrap: wrap;
     }
-   
-    .footer__col{
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-}
 
-@media(max-width: 992px){
-    .navbar{
-        flex-direction: column;
-    }
-}
-
-@media(max-width: 770px){
     .footer__col{
         flex: 0 0 100%;
         max-width: 100%;
     }
+
+    .content__left,
+    .content__right {
+        width: 100%;
+    }
+
+    .sidebar__one,
+    .sidebar__two {
+        height: 483px;
+        width: 50%;
+        padding: 20px;
+    }
+
+    .default-sidebar {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .sidebar__four,
+    .sidebar__three {
+        width: 50%;
+        height: 244px;
+        padding: 16px;
+    }
+
 }
 
 @media(max-width: 580px){
-    
+    .navbar {
+        flex-direction: column;
+    }
+
     .toggle-button{
         display: initial;
     }
@@ -579,9 +616,19 @@ body {
         padding: 0 20px;
     }
 
+    .footer__row{
+        flex-wrap: wrap;
+    }
+
+    .footer__col{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
     .nav-icon {
         display: flex;
         padding: 0 20px;
+        margin: 0;
     }
     
     .collapse-toggle{
@@ -592,16 +639,15 @@ body {
         display: none;
     }
 
-    .container__input {
-        width: 100%;
-    }
-
-    .container__content {
-        height: 100%;
-        flex-direction: column;
-    }
-
+    .container__content,
     .content__div {
         flex-direction: column;
+    }
+
+    .container__input,
+    .content__left,
+    .content__list,
+    .content__right {
+        width: 100%;
     }
 }
