@@ -612,6 +612,10 @@ body {
         text-align: center;
     }
 
+    .post__text {
+        height: 98px;
+    }
+
     .nav-items {
         padding: 0 20px;
     }
