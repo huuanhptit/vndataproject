@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VNDATAPRODUCT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="icon" href="./assets/img/represent.jpg" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/fonts/fontawesome-free-5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main">
+        <!-- header -->
+        <header id="header" class="shadow">
+          <nav class="container navbar">
+              <a href="/index.html" class="nav-logo text-light">VNDATAPRODUCT</a>
+              <!-- toggle button -->
+              <button class="toggle-button">
+                  <span><i class="fas fa-bars"></i></span>
+              </button>
+              <!-- .toggle button -->
+              
+              <!-- collapse on toggle button click -->
+              <div class="collapse">
+                  <ul class="navbar-nav nav-items">
+                      <a href="index.html" class="nav-link">Home</a>
+                      <a href="#" class="nav-link">About me</a>
+                      <a href="#" class="nav-link">Contact</a>
+                  </ul>
+              </div>
+              <div class="collapse">
+                  <ul class="navbar-nav nav-icon">
+                      <a href="#" class="nav-link"><i class="fab fa-facebook-f"></i></a>
+                      <a href="#" class="nav-link"><i class="fab fa-twitter"></i></a>
+                      <a href="#" class="nav-link"><i class="fab fa-instagram"></i></a>
+                  </ul>
+              </div>
+              <!-- .collapse on toggle button click -->
+            </nav>
+        </header>  
+        <!-- .header -->
+        <!-- container -->
+        <div class="content">
+            
+            <!--container content  -->
+            <div class="container__content grid">
+                <div class="content__left princ-left">
+                    <section class="para1">
+                        <h1>Principal Component Analysis for Dimensionality Reduction in Python</h1>
+                        <p>This article will focus on a walkthrough for principal component analysis in Python.</p>
+                        <span>Table of Contents:</span> 
+                        <ul>
+                            <li>Introduction</li>
+                            <li>Principal component analysis (Overview)</li>
+                            <li>Principal component analysis in Python</li>
+                            <li>Conclusion</li>
+                        </ul>
+                        <h2>Introduction</h2>
+                        <p>One of the main reasons for writing this article became my obsession to know the details, logic, and mathematics behind Principal Component Analysis (PCA). Majority of the online tutorials and articles about principal component analysis in Python today focus on showing learners how to apply this technique and visualize the results, rather than starting from the very beginning as to why do we even need it in the first place? What is it with our data that we need to shrink the number of features or group them?</p>
+                        <p>Let’s start from the beginning. What are you going to do with the dataset you have even if you don’t do any dimensionality reduction? I guess you are trying to feed it to a machine learning algorithm right?</p>
+                        <p>So that’s our first step. Our goal is to have a algorithm-friendly dataset. What do we mean by that?</p>
+                        <span>When you have a lot of features, there are a few potential drawbacks:</span>
+                        <ul>
+                            <li>Your model will have a high degree of complexity</li>
+                            <li>They may cause a significant amount of noise</li>
+                            <li>If they have different scales, it reduces the performance of several algorithms that are scale-sensitive</li>
+                            <li>More complicated visualizations in n-Dimensional space</li>
+                        </ul>
+                        <p>Here is where PCA comes into play. It will help us reduce the dimensionality of the dataset by extracting/eliminating the important/unimportant features.</p>
+                    </section>
+                    <section class="para1">
+                        <h1>Principal Component Analysis (Overview)</h1>
+                        <p>Principal component analysis (or PCA) is a linear technique for dimensionality reduction. Mathematically speaking, PCA uses orthogonal transformation of potentially correlated features into principal components that are linearly uncorrelated.</p>
+                        <p>As a result, the sequence of <span>n</span> principal components is structured in a descending order by the amount of the variance in the original dataset they explain. What this essentially means is that the first principal component explains more variance then the second principal component and so on.</p>
+                        <span>It is much better to put it into context of how principal components are calculated step by step:</span>
+                        <ul>
+                            <li>Calculate the covariance matrix</li>
+                            <li>Calculate eigenvalues</li>
+                            <li>Calculate eigenvectors</li>
+                            <li>Sort eigenvectors according to eigenvalues in decreasing order</li>
+                            <li>Transform original data to <span>k</span>-dimensional using <span>k</span> eigenvectors</li>
+                        </ul>
+                        <p><span>Note</span>: as mentioned before, depending on the data you are working with and the scaling of features, you may want to standardize the data before running PCA on it.</p>
+                    </section>
+                    <section class="para1">
+                        <h1>Principal component analysis in Python</h1>
+                        <p>To continue following this tutorial we will need two Python libraries: pandas, numpy, sklearn, and matplotlib.</p>
+                        <p>If you don’t have them installed, please open “Command Prompt” (on Windows) and install them using the following code:</p>
+                        <pre>
+    <code>
+    pip install pandas
+    pip install numpy
+    pip install sklearn
+    pip install matplotlib
+    </code>
+                        </pre>
+                        <p>Import the required libraries:</p>
+                        <pre>
+    <code>
+    <span class="color">import</span> pandas <span class="color">as</span> pd
+    <span class="color">import</span> numpy <span class="color">as</span> np
+    <span class="color">import</span> matplotlib.pyplot <span class="color">as</span> plt
+    <span class="color">from</span> sklearn.datasets <span class="color">import</span> load_wine
+    <span class="color">from</span> sklearn.preprocessing <span class="color">import</span> StandardScaler
+    <span class="color">from</span> sklearn.decomposition <span class="color">import</span> PCA
+    </code> 
+                        </pre>
+                        <p>Once the libraries are downloaded, installed, and imported, we can proceed with Python code implementation.</p>
+                        <h3>Step 1: Loading the dataset</h3>
+                        <p>In this tutorial we will use the wine recognition dataset available as a part of sklearn library. This dataset contains 13 features and target being 3 classes of wine.</p>
+                        <span>The description of the dataset is below:</span>
+                        <ul>
+                            <li>Alcohol</li>
+                            <li>Malic acid</li>
+                            <li>Ash</li>
+                            <li>Alcalinity of ash</li>
+                            <li>Magnesium</li>
+                            <li>Total phenols</li>
+                            <li>Flavanoids</li>
+                            <li>Nonflavanoid phenols</li>
+                            <li>Proanthocyanins</li>
+                            <li>Color intensity</li>
+                            <li>Hue</li>
+                            <li>OD280/OD315 of diluted wines</li>
+                            <li>Proline</li>
+                        </ul>
+                        <p>This dataset is particularly interesting to illustrate classification problems as well as it is great for our showcase of PCA application. It has enough features to see the true benefit of dimensionality reduction.</p>
+                        <pre>
+    <code>
+    wine <span class="color2">=</span> load_wine()
+    df <span class="color2">=</span> pd.DataFrame(wine.data, columns=wine.feature_names)
+    
+    <span class="color">print</span>(df.iloc[:,<span class="color3">0</span>:<span class="color3">4</span>].head())
+    </code>
+                        </pre>
+                        <p>Data from sklearn, when imported <span>(wine)</span>, appear as container objects for datasets. It is similar to a dictionary object. Then we convert it to a pandas dataframe and use the feature names as our column names.</p>
+                        <p>Since we have 13 features, it will be very wide to show, so we take a look at the first 4 columns just to make sure that our code worked.</p>
+                        <h3>Step 2: Exploring the dataset</h3>
+                        <p>Now let’s take a look at the basic descriptive statistics of this dataframe. We will continue to just display the first 4 columns to save some space in the output.</p>
+                        <pre>
+    <code>
+    <span class="color">print</span>(df.iloc[:,<span class="color3">0</span>:<span class="color3">4</span>].describe())
+    </code>
+                        </pre>
+                        <pre>
+                            <code>
+    Output:
+
+            alcohol  malic_acid         ash  alcalinity_of_ash
+   count  178.000000  178.000000  178.000000         178.000000
+   mean    13.000618    2.336348    2.366517          19.494944
+   std      0.811827    1.117146    0.274344           3.339564
+   min     11.030000    0.740000    1.360000          10.600000
+   25%     12.362500    1.602500    2.210000          17.200000
+   50<span class="color2">%</span>     13.050000    1.865000    2.360000          19.500000
+   75<span class="color2">%</span>     13.677500    3.082500    2.557500          21.500000
+   max     14.830000    5.800000    3.230000          30.000000
+                            </code>
+                        </pre>
+                        <p>Below is a scatter plot matrix for the 4 features we have been working with above. It is of a smaller size on the blog page so it doesn’t reduce the page load time. If you would like to explore it in depth, you can easily recreate it with a few parameter tweaks.</p>
+                        <img src="./assets/img/princi/Capture.PNG" alt="">
+                        <p>What you see in this scatterplot matrix is a visualization of the descriptive statistics output. We will use it to compare with the scaled data to show that the distribution and the spread of the values for each feature remained the same after standardization.</p>
+                        <p>As we can see, the ranges of each feature are quite different, along with their means and variances. Our next step is to scale the data for each feature by subtracting its mean and dividing by its standard deviation for each value.</p>
+                        <h3>Step 3: Standardizing the dataset</h3>
+                        <p>PCA is mainly focused on features that maximize variance. In case of the current not scaled data, PCA will consider that feature 4 (‘alcalinity_of_ash’) dominates the maximum variance metric since its range is 5-10 times larger compared to features 1:3. Hence the resulting principal components can be very different from the standardized data. More detailed information about the importance of scaling for PCA is available <a href="">here</a href="">.</p>
+                        <p>When it comes to scaling our data, we will apply the following standardization method:</p>
+                        <img src="./assets/img/princi/Capture2.PNG" alt="">
+                        <pre>
+    <code>
+    df <span class="color2">=</span> StandardScaler().fit_transform(df)
+    df <span class="color2">=</span> pd.DataFrame(df,columns <span class="color2">=</span> wine.feature_names)
+    </code>
+                        </pre>
+                        <pre>
+    <code>
+        Output:
+
+        alcohol  malic_acid       ash  alcalinity_of_ash
+    0  1.518613   -0.562250  0.232053          -1.169593
+    1  0.246290   -0.499413 -0.827996          -2.490847
+    2  0.196879    0.021231  1.109334          -0.268738
+    3  1.691550   -0.346811  0.487926          -0.809251
+    4  0.295700    0.227694  1.840403           0.451946    
+    </code>
+                        </pre>
+                        <p>When we apply the StandatdScaler() to a dataframe, the resulting transformed object is an array, which we then convert back to a pandas dataframe object. We can see that the scale of the transformed features is more similar across features than in raw data.</p>
+                        <p>To show what this implies, let’s take a look at the descriptive statistics of the scaled data.</p>
+                        <pre>
+    <code>
+    <span class="color">print</span>(df.iloc[:,<span class="color3">0</span>:<span class="color3">4</span>].describe())
+    </code>
+                        </pre>
+                        <pre>
+                            <code>
+    Output:
+
+                alcohol    malic_acid           ash  alcalinity_of_ash
+    count  1.780000e+02  1.780000e+02  1.780000e+02       1.780000e+02
+    mean   7.943708e-15  3.592632e-16 -4.066660e-15      -7.983626e-17
+    std    1.002821e+00  1.002821e+00  1.002821e+00       1.002821e+00
+    min   -2.434235e+00 -1.432983e+00 -3.679162e+00      -2.671018e+00
+    25<span class="color2">%</span>   -7.882448e-01 -6.587486e-01 -5.721225e-01      -6.891372e-01
+    50<span class="color2">%</span>    6.099988e-02 -4.231120e-01 -2.382132e-02       1.518295e-03
+    75<span class="color2">%</span>    8.361286e-01  6.697929e-01  6.981085e-01       6.020883e-01
+    max    2.259772e+00  3.109192e+00  3.156325e+00       3.154511e+00
+                            </code>
+                        </pre>
+                        <p>Notice that in the scaled data the means of features are centered around 0 and variance is the unit variance.</p>
+                        <p>The matrix scatterplot of the scaled data below visualizes the point mentioned above.</p>
+                        <img src="./assets/img/princi/Capture.PNG" alt="">
+                        <p>You can <a href="">recreate</a> it the same way as the scatter plot matrix before. What’s important is to compare the distributions on the features and the spread of the scaled values, notice that those are the same.</p>
+                        <p>Note: if you have categorical data, you will need to <a href="">label encode</a> it before scaling.</p>
+                        <h3>Step 4: Apply principal component analysis in Python</h3>
+                        <p>After scaling our data, we are on track to the most interesting part of this tutorial. We will go ahead and apply PCA to the scaled dataset.</p>
+                        <pre>
+                            <code>
+  pca <span class="color2">=</span> PCA(n_components=2)
+  pca_model <span class="color2">=</span> pca.fit(df)
+  df_trans <span class="color2">=</span>pd.DataFrame(pca_model.transform(df), columns <span class="color2">=</span>[<span class="color4">'pca1'</span>, <span class="color4">'pca2'</span>])
+                            </code>
+                        </pre>
+                        <p>First, store the instance of sklearn <span>PCA</span> as pca with 2 components. The reason we chose specifically 2 is just for simplicity and presentation in this tutorial. Later in the article we will discuss how to find the number of optimal principal components.</p>
+                        <p><span>pca_model</span> stores the eigenvectors of the applied technique, which is used to transform the scaled dataset <span>df</span> into <span>df_trans</span> by reducing its shape from 13 original features to 2 features which are represented by principal components.</p>
+                        <p>Below is the visualization of this dimensionality reduction (from 13-dimensional to 2-dimensional. Let’s take a look:</p>
+                        <pre>
+    <code>
+    <span class="color">print</span>(df_trans.head())
+    </code>
+                        </pre>
+                        <pre>
+                            <code>
+    Output:
+
+        pca1      pca2
+    0  3.316751 -1.443463
+    1  2.209465  0.333393
+    2  2.516740 -1.031151
+    3  3.757066 -2.756372
+    4  1.008908 -0.869831
+                            </code>
+                        </pre>
+                        <p>What we see above is our scaled 13-feature dataset transformed to 2-feature dataset where each feature is a principal component. What it does now is allows us to visualize a 13-dimensional dataset in a 2-dimensional space due to dimensionality reduction.</p>
+                        <p>Visualizing the transformed data <span>df_trans:</span></p>
+                        <pre>
+                            <code>
+    plt.scatter(df_trans[<span class="color4">'pca1'</span>], df_trans[<span class="color4">'pca2'</span>], alpha<span class="color2">=</span><span class="color3">0.8</span>)
+    plt.xlabel(<span class="color4">'PCA 1'</span>)
+    plt.ylabel(<span class="color4">'PCA 2'</span>)
+    plt.show()
+                            </code>
+                        </pre>
+                    </section>
+                </div>
+                <!-- .container -->
+                
+                <!-- sidebar -->
+                <div class="content__right">
+                    <div class="container__input princ">
+                        <form action="" class="search-form">
+                            <input type="text" class="input-link" name="" placeholder="Search in resources..." aria-label="Search in resouces..." required>
+                            <button type="submit" class="submit" aria-label="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="default-sidebar">
+                        <section class="sidebar__one">
+                            <h4 class="side__text">Recent posts</h4>
+                            <article class="text__one">
+                                <a href="" class="text__one-img">
+                                    <img src="./assets/img/sidebar/side1.PNG" alt="" class="text__one-img-format">
+                                </a>
+                                <div class="text__one-note">
+                                    <h4 class="text__one-note-form">
+                                        <a href="" class="text__one-info">Davies-Bouldin Index for K-Means Clustering Evaluation in Python</a>
+                                    </h4>
+                                </div>
+                            </article>
+                            
+                            <article class="text__two">
+                                <div class="text__two-note">
+                                    <h4 class="text__two-note-form">
+                                        <a href="" class="text__two-info">Convert Pandas DataFrame to NumPy Array in Python</a>
+                                    </h4>
+                                </div>
+                            </article>
+                            <article class="text__two">
+                                <div class="text__two-note">
+                                    <h4 class="text__two-note-form">
+                                        <a href="" class="text__two-info">Calculate Factorial in Python</a>
+                                    </h4>
+                                </div>
+                            </article>
+                            <article class="text__two">
+                                <div class="text__two-note">
+                                    <h4 class="text__two-note-form">
+                                        <a href="" class="text__two-info">Solve Quadratic Equation using Python</a>
+                                    </h4>
+                                </div>
+                            </article>
+                            
+                            <article class="text__one">
+                                <a href="" class="text__one-img">
+                                    <img src="./assets/img/sidebar/side2.PNG" alt="" class="text__one-img-format">
+                                </a>
+                                <div class="text__one-note">
+                                    <h4 class="text__one-note-form">
+                                        <a href="" class="text__one-info">Linear Programming with Gurobipy in Python</a>
+                                    </h4>
+                                </div>
+                            </article>
+                        </section>
+                        <section class="sidebar__two">
+                            <h4 class="side__text">Categories</h4>
+                            <div class="side__list">
+                                <a href="coding.html" class="side__list-items">Coding Challenges</a>
+                                <a href="deployment.html" class="side__list-items">Deployment</a>
+                                <a href="feature.html" class="side__list-items">Feature Engineering</a>
+                                <a href="machine.html" class="side__list-items">Machine Learning</a>
+                                <a href="optimization.html" class="side__list-items">Optimization</a>
+                                <a href="python.html" class="side__list-items">Python Programming</a>
+                                <a href="statistics.html" class="side__list-items">Statistics</a>
+                                <a href="uncategorized.html" class="side__list-items">Uncategorized</a>
+                            </div>
+                        </section>
+                        <section class="sidebar__three">
+                            <div class="sidebar__list">
+                                <p>
+                                    <a href="" class="sidebar__list-items">Python Bloggers</a>
+                                </p>
+                                <p>
+                                    <a href="" class="sidebar__list-items">Python Developer Jobs</a>
+                                </p>
+                            </div>
+                        </section>
+                        <section class="sidebar__four">
+                            <a href="">
+                                <img src="./assets/img/represent.jpg" alt="" class="sidebar-img">
+                            </a>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer -->
+        <footer id="footer" class="grid">
+            <div id="footer" class="container bg--blue">
+                <div class="footer__row mb-3">
+                    <div class="footer__col">
+                        <h2 class="footer__title">About us</h2>
+                        <div class="footer__text">
+                            
+                            <p class=>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam cumque ducimus qui, a eius rem suscipit, expedita distinctio et praesentium, inventore ullam accusamus amet ipsum veniam quae maiores voluptatem perferendis?
+                            </p>
+                            
+                            <address>
+                                <i class="fas fa-map-marker-alt"></i>
+                                97 Man Thiện, Hiệp Phú, Quận 9
+                            </address>
+                            
+                            <div class="phone">
+                                <i class="fas fa-phone"></i>
+                                192-548-192
+                            </div>
+                                
+                            <div class="email">
+                                <i class="far fa-envelope"></i>
+                                VNDATAPRODUCT@gmail.com
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="footer footer__col">
+                        <h2 class="footer__title">Our Terms And Conditions</h2>
+                        <div class="footer__text">
+                            <p>Our Privacy Policy Creator includes several compliance verification tools to help you effectively protect your customers privacy.</p>
+                            <p>While limiting your liability, all while adhering to the most notable state and federal privacy laws and 3rd party initiatives, including.</p>
+                            <p>Check Our Privacy Policy</p>
+                        </div>
+                    </div>       
+                    <div class="footer footer__col">
+                        <h2 class="footer__title">Caterogies</h2>
+                        <div class="tags">
+                            <div class="d-flex flex-wrap">
+                                <a href="coding.html" class="btn footer__text ">Coding Chanllenges</a>
+                                <a href="deployment.html" class="btn footer__text ">Deployment</a>
+                                <a href="machine.html" class="btn footer__text ">Machine Learning</a>
+                                <a href="python.html" class="btn footer__text ">Python Progamming</a>
+                            </div>
+                        </div>
+                        <h2 class="footer__title">Social</h2>
+                        <div class="tags">
+                            <div class="d-flex flex-wrap">
+                                <a href="#" class="btn footer__text "><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="btn footer__text "><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="btn footer__text "><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>       
+                </div>
+            </div>
+            <!-- copyright -->
+            <div class="copyright">
+                <p class="text-center text-light">
+                    @ 2021 <a href="#" class="text-secondary">VNDATAPRODUCT</a> - Personal Blog Theme. All rights reserved.
+                </p>
+            </div>
+            <!-- .copyright -->
+        </footer>
+        <!-- .footer -->
+        <!-- custom javascript main.js file -->
+        <script src="main.js"></script>
+    </div>
+</body>
+</html>
